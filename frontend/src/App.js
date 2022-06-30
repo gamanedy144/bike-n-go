@@ -12,8 +12,8 @@ function App() {
         <header className="App-header">
           <Navbar
             style={{
-              paddingTop: '1' + 'rem',
-              paddingBottom: '1' + 'rem',
+              paddingTop: '1rem',
+              paddingBottom: '1rem',
             }}
             variant="light"
           >
