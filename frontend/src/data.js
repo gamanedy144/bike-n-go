@@ -3,7 +3,7 @@ const data = {
   products: [
     {
       //first object
-      _id: 1,
+      _id: '1',
       name: 'Jam Mountain Bike',
       slug: 'jam-mountain-bike',
       category: 'Mountain Bike',
@@ -17,7 +17,7 @@ const data = {
     },
     {
       //second object
-      _id: 2,
+      _id: '2',
       name: 'Test Road Bike',
       slug: 'test-road-bike',
       category: 'Road Bike',
@@ -31,7 +31,7 @@ const data = {
     },
     {
       //third object
-      _id: 3,
+      _id: '3',
       name: 'Carrera Folding Bike',
       slug: 'carrera-folding-bike',
       category: 'Folding Bike',
@@ -45,7 +45,7 @@ const data = {
     },
     {
       //fourth object
-      _id: 4,
+      _id: '4',
       name: 'Xiaomi Folding Bike',
       slug: 'xiaomi-folding-bike',
       category: 'Folding Bike',

@@ -22,3 +22,6 @@ Create utils.js to manange error messages
 
 Create React Context and Store provider
 Implement add to cart functionality
+
+Complete add to cart functionality
+Check if the stock is sufficient for the order
