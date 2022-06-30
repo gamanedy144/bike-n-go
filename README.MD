@@ -19,3 +19,6 @@ Changed pictures with higher quality ones so these would scale better
 
 Create LoadingBox and MessageBox components and use troughout the application
 Create utils.js to manange error messages
+
+Create React Context and Store provider
+Implement add to cart functionality
