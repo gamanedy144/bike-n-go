@@ -1,8 +1,10 @@
 import React, { useEffect, useReducer, useState } from 'react';
 // import data from '../data';
 import { Link } from 'react-router-dom';
-import backgroundPhoto from '../images/home2.jpg';
+import bg1 from '../images/home1.jpg';
+import bg2 from '../images/home2.jpg';
 import axios from 'axios';
+import { Carousel } from 'react-bootstrap';
 
 function reducer(state, action) {
   switch (action.type) {
@@ -39,14 +41,43 @@ export default function HomeScreen() {
   return (
     <div>
       {/* <h1>Featured Products</h1> */}
-      <div className="homescreen-bg-container">
+      {/* <div className="homescreen-bg-container">
         <img
           src={backgroundPhoto}
           alt="bycicle-store"
           className="homescreen-bg"
         />
-      </div>
+      </div> */}
+      <div className="carousel-container mb-3">
+        <Carousel>
+          <Carousel.Item>
+            <img className="d-block w-100" src={bg1} alt="First slide" />
+            <Carousel.Caption>
+              <div className="see-trough p-3">
+                <h3 className="display-3">
+                  <strong>Bike N Go</strong>
+                </h3>
+                <p>Now open in London!</p>
+              </div>
+            </Carousel.Caption>
+          </Carousel.Item>
+          <Carousel.Item>
+            <img className="d-block w-100" src={bg2} alt="Second slide" />
 
+            <Carousel.Caption>
+              <div className="see-trough p-3">
+                <h3 className="display-3">
+                  <strong>Rent your bike!</strong>
+                </h3>
+                <p className="mb-3">
+                  Visit us at one of our two locations now opened in central
+                  London!
+                </p>
+              </div>
+            </Carousel.Caption>
+          </Carousel.Item>
+        </Carousel>
+      </div>
       <div className="products">
         {products.map((product) => (
           <div key={product._id} className="product">
