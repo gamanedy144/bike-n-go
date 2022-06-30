@@ -9,3 +9,6 @@ Set up server in backend folder with NodeJS.
 Set up proxy for backend communication in package.json in frontend folder to "proxy" : "http://localhost:5000" and solve issues by running `npm audit fix --force`
 Create components for Product and Rating
 Use Card, Row and Col elements from react-bootstrap for better styles
+Create Product details screen
+Use Helmet to modify title of pages according to items, installed with `npm i react-helmet-async`
+Changed pictures with higher quality ones so these would scale better

@@ -1,10 +1,11 @@
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useEffect, useReducer } from 'react';
 // import data from '../data';
 import bg1 from '../images/home1.jpg';
 import bg2 from '../images/home2.jpg';
 import axios from 'axios';
 import { Carousel, Row, Col } from 'react-bootstrap';
 import Product from '../components/Product';
+import { Helmet } from 'react-helmet-async';
 
 function reducer(state, action) {
   switch (action.type) {
@@ -40,6 +41,9 @@ export default function HomeScreen() {
   }, []);
   return (
     <div>
+      <Helmet>
+        <title>Bike 'N' Go</title>
+      </Helmet>
       {/* <h1>Featured Products</h1> */}
       {/* <div className="homescreen-bg-container">
         <img

@@ -18,9 +18,7 @@ export default function Product(props) {
         <Card.Text>
           <strong>${product.price}</strong>
         </Card.Text>
-        <Button style={{ backgroundColor: 'black', border: '0px black solid' }}>
-          Add to cart
-        </Button>
+        <Button className="dark-bgc">Add to cart</Button>
       </Card.Body>
     </Card>
   );

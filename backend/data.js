@@ -23,7 +23,7 @@ const data = {
       category: 'Road Bike',
       image: '/images/p2.png',
       price: 1,
-      countInStock: 1,
+      countInStock: 0,
       brand: 'Test',
       rating: 1,
       numReviews: 1,

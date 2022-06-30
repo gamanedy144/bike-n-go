@@ -53,3 +53,10 @@ main {
   --bs-bg-opacity: 0.5;
   background-color: rgba(0, 0, 0, var(--bs-bg-opacity)) !important;
 }
+.img-large {
+  width: 740px;
+}
+.dark-bgc {
+  background-color: #000;
+  border: 0px black solid;
+}
