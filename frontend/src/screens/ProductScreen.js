@@ -4,6 +4,8 @@ import { useParams } from 'react-router-dom';
 import { Row, Col, Card, ListGroup, Button, Badge } from 'react-bootstrap';
 import Rating from '../components/Rating';
 import { Helmet } from 'react-helmet-async';
+import LoadingBox from '../components/LoadingBox';
+import MessageBox from '../components/MessageBox';
 function reducer(state, action) {
   switch (action.type) {
     case 'FETCH_REQUEST':
@@ -38,9 +40,9 @@ export default function ProductScreen() {
   }, [slug]);
 
   return loading ? (
-    <div>loading...</div>
+    <LoadingBox />
   ) : error ? (
-    <div>{error}</div>
+    <MessageBox variant="danger">{error}</MessageBox>
   ) : (
     <div>
       <Row>
