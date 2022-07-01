@@ -31,3 +31,10 @@ Create Cart screen to show the booked products
 Create Signin Screen
 
 Connect to the MongoDB local database
+
+Create Product and User model
+Create seed route for sampling products
+
+Create and seed sample users
+
+Create signing api

@@ -1,8 +1,23 @@
 // dummy data for the database models
+import bcrypt from 'bcryptjs';
 const data = {
+  users: [
+    {
+      name: 'Eddie',
+      email: 'admin@example.com',
+      password: bcrypt.hashSync('123456'),
+      isAdmin: true,
+    },
+    {
+      name: 'John',
+      email: 'user@example.com',
+      password: bcrypt.hashSync('123456'),
+      isAdmin: false,
+    },
+  ],
   products: [
     {
-      _id: '1',
+      // _id: '1',
       name: 'Jam Mountain Bike',
       slug: 'jam-mountain-bike',
       category: 'Mountain Bike',
@@ -16,7 +31,7 @@ const data = {
         'High quality mountain bike. Essential for a weekend off in the forest with the family or friends',
     },
     {
-      _id: '2',
+      // _id: '2',
       name: 'Test Road Bike',
       slug: 'test-road-bike',
       category: 'Road Bike',
@@ -29,7 +44,7 @@ const data = {
       description: 'High quality road bike',
     },
     {
-      _id: '3',
+      // _id: '3',
       name: 'Carrera Folding Bike',
       slug: 'carrera-folding-bike',
       category: 'Folding Bike',
@@ -42,7 +57,7 @@ const data = {
       description: 'High quality folding bike',
     },
     {
-      _id: '4',
+      // _id: '4',
       name: 'Xiaomi Folding Bike',
       slug: 'xiaomi-folding-bike',
       category: 'Folding Bike',
