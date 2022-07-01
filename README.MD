@@ -29,3 +29,5 @@ Check if the stock is sufficient for the order
 Create Cart screen to show the booked products
 
 Create Signin Screen
+
+Connect to the MongoDB local database
