@@ -1,16 +1,35 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useReducer, useState } from 'react';
 import { Store } from '../Store';
 import { Helmet } from 'react-helmet-async';
-import { Row, Col, ListGroup, Button, Card } from 'react-bootstrap';
+import { Row, Col, ListGroup, Button, Card, Form } from 'react-bootstrap';
 import MessageBox from '../components/MessageBox';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+
 export default function CartScreen() {
   const navigate = useNavigate();
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const {
-    cart: { cartItems },
+    cart: { cartItems, paymentMethod, pickUpLocation },
   } = state;
+  const [paymentMethodName, setPaymentMethod] = useState(
+    paymentMethod || 'Card'
+  );
+  const [pickUpLocationState, setPickUpLocation] = useState(
+    pickUpLocation || 'BNG-TB'
+  );
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    ctxDispatch({ type: 'SAVE_PAYMENT_METHOD', payload: paymentMethodName });
+    localStorage.setItem('paymentMethod', paymentMethod);
+
+    ctxDispatch({
+      type: 'SAVE_PICKUP_LOCATION',
+      payload: pickUpLocationState,
+    });
+    localStorage.setItem('pickUpLocation', pickUpLocation);
+  };
   const updateCartHandler = async (item, quantity) => {
     const { data } = await axios.get(`/api/products/${item._id}`);
     if (data.countInStock < quantity) {
@@ -27,8 +46,9 @@ export default function CartScreen() {
   };
 
   const checkoutHandler = () => {
-    navigate('/signin?redirect=/shipping');
+    navigate('/signin?redirect=/orders');
   };
+
   return (
     <div>
       <Helmet>
@@ -91,6 +111,72 @@ export default function CartScreen() {
           )}
         </Col>
         <Col md={4}>
+          <Card className="mb-3">
+            <Card.Body>
+              <ListGroup variant="flush">
+                <ListGroup.Item>
+                  <h5>Choose a store:</h5>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <Form onSubmit={submitHandler}>
+                    <div className="mb-3">
+                      <Form.Check
+                        type="radio"
+                        id="BNG-TB"
+                        label="Bike N Go Tower Bridge Store"
+                        value="BNG-TB"
+                        checked={pickUpLocationState === 'BNG-TB'}
+                        onChange={(e) => setPickUpLocation(e.target.value)}
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <Form.Check
+                        type="radio"
+                        id="BNG-KC"
+                        label="Bike N Go King's Cross Store"
+                        value="BNG-KC"
+                        checked={pickUpLocationState === 'BNG-KC'}
+                        onChange={(e) => setPickUpLocation(e.target.value)}
+                      />
+                    </div>
+                  </Form>
+                </ListGroup.Item>
+              </ListGroup>
+            </Card.Body>
+          </Card>
+          <Card className="mb-3">
+            <Card.Body>
+              <ListGroup variant="flush">
+                <ListGroup.Item>
+                  <h5>Choose a store:</h5>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <Form onSubmit={submitHandler}>
+                    <div className="mb-3">
+                      <Form.Check
+                        type="radio"
+                        id="Card"
+                        label="Card"
+                        value="Card"
+                        checked={paymentMethodName === 'Card'}
+                        onChange={(e) => setPaymentMethod(e.target.value)}
+                      />
+                    </div>{' '}
+                    <div className="mb-3">
+                      <Form.Check
+                        type="radio"
+                        id="Cash"
+                        label="Cash on pickup"
+                        value="Cash"
+                        checked={paymentMethodName === 'Cash'}
+                        onChange={(e) => setPaymentMethod(e.target.value)}
+                      />
+                    </div>
+                  </Form>
+                </ListGroup.Item>
+              </ListGroup>
+            </Card.Body>
+          </Card>
           <Card>
             <Card.Body>
               <ListGroup variant="flush">
@@ -105,7 +191,7 @@ export default function CartScreen() {
                 <ListGroup.Item>
                   <div className="d-grid">
                     <Button
-                      type="button"
+                      type="submit"
                       variant="primary"
                       disabled={cartItems.length === 0}
                       className="dark-bgc"

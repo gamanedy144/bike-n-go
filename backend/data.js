@@ -1,6 +1,20 @@
 // dummy data for the database models
 import bcrypt from 'bcryptjs';
 const data = {
+  stores: [
+    {
+      name: 'Bike N Go Tower Bridge',
+      slug: 'BNG-TB',
+      address: '98 Tower Bridge, EC1K 8UB',
+      city: 'London',
+    },
+    {
+      name: "Bike N Go King's Cross",
+      slug: 'BNG-KC',
+      address: "12 King's Cross, WC1H 10DT",
+      city: 'London',
+    },
+  ],
   users: [
     {
       name: 'Eddie',

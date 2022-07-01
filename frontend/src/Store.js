@@ -3,10 +3,19 @@ import React, { createContext, useReducer } from 'react';
 export const Store = createContext();
 
 const initialState = {
+  userInfo: localStorage.getItem('userInfo')
+    ? JSON.parse(localStorage.getItem('userInfo'))
+    : null,
   cart: {
     cartItems: localStorage.getItem('cartItems')
       ? JSON.parse(localStorage.getItem('cartItems'))
       : [],
+    pickUpLocation: localStorage.getItem('pickUpLocation')
+      ? localStorage.getItem('pickUpLocation')
+      : '',
+    paymentMethod: localStorage.getItem('paymentMethod')
+      ? localStorage.getItem('paymentMethod')
+      : '',
   },
 };
 
@@ -37,6 +46,34 @@ function reducer(state, action) {
       localStorage.setItem('cartItems', JSON.stringify(cartItems));
       return { ...state, cart: { ...state.cart, cartItems } };
     }
+    case 'USER_SIGNIN':
+      return { ...state, userInfo: action.payload };
+    case 'USER_SIGNOUT':
+      return {
+        ...state,
+        userInfo: null,
+        cart: {
+          cartItems: [],
+          pickUpLocation: '',
+          paymentMethod: '',
+        },
+      };
+    case 'SAVE_PICKUP_LOCATION':
+      return {
+        ...state,
+        cart: {
+          ...state.cart,
+          pickUpLocation: action.payload,
+        },
+      };
+    case 'SAVE_PAYMENT_METHOD':
+      return {
+        ...state,
+        cart: {
+          ...state.cart,
+          paymentMethod: action.payload,
+        },
+      };
     default:
       return state;
   }
