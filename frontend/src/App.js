@@ -10,7 +10,7 @@ import { Store } from './Store';
 import CartScreen from './screens/CartScreen';
 import SignInScreen from './screens/SigninScreen';
 import SignupScreen from './screens/SignupScreen';
-import OrdersScreen from './screens/OrdersScreen';
+import OrderHistoryScreen from './screens/OrderHistoryScreen';
 import StoreScreen from './screens/StoreScreen';
 import PlaceOrderScreen from './screens/PlaceOrderScreen';
 import OrderScreen from './screens/OrderScreen';
@@ -108,6 +108,7 @@ function App() {
               <Route path="/stores" element={<StoreScreen />} />
               <Route path="/placeorder" element={<PlaceOrderScreen />} />
               <Route path="/order/:id" element={<OrderScreen />} />
+              <Route path="/orderhistory" element={<OrderHistoryScreen />} />
             </Routes>
           </Container>
         </main>
