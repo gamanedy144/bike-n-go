@@ -24,7 +24,27 @@ const reducer = (state, action) => {
       return state;
   }
 };
+const storeReducer = (state, action) => {
+  switch (action.type) {
+    case 'FETCH_REQUEST':
+      return { ...state, storeLoading: true };
+    case 'FETCH_SUCCESS':
+      return { ...state, stores: action.payload, storeLoading: false };
+    case 'FETCH_FAIL':
+      return { ...state, storeLoading: false, storeError: action.payload };
+    default:
+      return state;
+  }
+};
 export default function OrderScreen() {
+  const [{ storeLoading, storeError, stores }, storeDispatch] = useReducer(
+    storeReducer,
+    {
+      storeLoading: true,
+      storeError: '',
+      stores: [],
+    }
+  );
   const { state } = useContext(Store);
   const { userInfo } = state;
   const params = useParams();
@@ -38,6 +58,16 @@ export default function OrderScreen() {
   });
 
   useEffect(() => {
+    const fetchStoreData = async () => {
+      storeDispatch({ type: 'FETCH_REQUEST' });
+      try {
+        const result = await axios.get('/api/stores');
+        storeDispatch({ type: 'FETCH_SUCCESS', payload: result.data });
+      } catch (err) {
+        storeDispatch({ type: 'FETCH_FAIL', payload: err.message });
+      }
+    };
+    fetchStoreData();
     const fetchOrder = async () => {
       try {
         dispatch({ type: 'FETCH_REQUEST' });
@@ -76,17 +106,12 @@ export default function OrderScreen() {
             <Card.Body>
               <Card.Title>Pickup</Card.Title>
               <Card.Text>
-                <strong>Store Name:</strong> {order.pickUpLocation.name} <br />
-                <strong>Store Address:</strong> {order.pickUpLocation.address},{' '}
-                {order.pickUpLocation.city}
+                <strong>Store Name:</strong>{' '}
+                {stores.find((x) => x._id === order.pickUpLocation).name} <br />
+                <strong>Store Address:</strong>{' '}
+                {stores.find((x) => x._id === order.pickUpLocation).address},{' '}
+                {stores.find((x) => x._id === order.pickUpLocation).city}
               </Card.Text>
-              {order.isDelivered ? (
-                <MessageBox variant="succes">
-                  Delivered at {order.deliveredAt}
-                </MessageBox>
-              ) : (
-                <MessageBox variant="danger">Not Delivered</MessageBox>
-              )}
             </Card.Body>
           </Card>
           <Card className="mb-3">
@@ -95,12 +120,16 @@ export default function OrderScreen() {
               <Card.Text>
                 <strong>Method:</strong> {order.paymentMethod}
               </Card.Text>
-              {order.isPaid ? (
-                <MessageBox variant="success">
-                  Paid at {order.paidAt}
-                </MessageBox>
+              {order.paymentMethod === 'Card' ? (
+                order.isPaid ? (
+                  <MessageBox variant="success">
+                    Paid at {order.paidAt}
+                  </MessageBox>
+                ) : (
+                  <MessageBox variant="danger">Not Paid</MessageBox>
+                )
               ) : (
-                <MessageBox variant="danger">Not Paid</MessageBox>
+                <></>
               )}
             </Card.Body>
           </Card>

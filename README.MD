@@ -46,3 +46,5 @@ Updated NavBar to hold all the necessary links
 Create Stores screen
 Create PlaceOrder screen
 Justify the navbar items properly according to the design
+
+Created Order Screen + bug fixing
