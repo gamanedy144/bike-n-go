@@ -18,7 +18,7 @@ const orderSchema = new mongoose.Schema(
     ],
     pickUpLocation: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Store',
+      ref: 'Stores',
       required: true,
     },
     paymentMethod: { type: String, required: true },

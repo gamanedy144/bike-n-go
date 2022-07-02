@@ -16,11 +16,24 @@ orderRouter.post(
       taxPrice: req.body.taxPrice,
       totalPrice: req.body.totalPrice,
       user: req.user._id,
-      pickUpLocation: req.pickUpLocation._id,
+      pickUpLocation: req.body.pickUpLocation,
     });
 
     const order = await newOrder.save();
     res.status(201).send({ message: 'New Order Created', order });
+  })
+);
+
+orderRouter.get(
+  '/:id',
+  isAuth,
+  expressAsyncHandler(async (req, res) => {
+    const order = await Order.findById(req.params.id);
+    if (order) {
+      res.send(order);
+    } else {
+      res.status(404).send({ message: 'Order Not Found' });
+    }
   })
 );
 export default orderRouter;

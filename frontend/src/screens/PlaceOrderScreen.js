@@ -51,7 +51,36 @@ export default function PlaceOrderScreen() {
   );
   cart.taxPrice = round2(0.15 * cart.itemsPrice);
   cart.totalPrice = cart.itemsPrice + cart.taxPrice;
-  const placeOrderHandler = async () => {};
+  const placeOrderHandler = async () => {
+    try {
+      dispatch({ type: 'CREATE_REQUEST' });
+      console.log('requested');
+      const { data } = await axios.post(
+        '/api/orders',
+        {
+          orderItems: cart.cartItems,
+          paymentMethod: cart.paymentMethod,
+          itemsPrice: cart.itemsPrice,
+          taxPrice: cart.taxPrice,
+          totalPrice: cart.totalPrice,
+          pickUpLocation: cart.pickUpLocation,
+        },
+        {
+          headers: {
+            authorization: `Bearer ${userInfo.token}`,
+          },
+        }
+      );
+      console.log('posted');
+      ctxDispatch({ type: 'CART_CLEAR' });
+      dispatch({ type: 'CREATE_SUCCESS' });
+      localStorage.removeItem('cartItems');
+      navigate(`/order/${data.order._id}`);
+    } catch (err) {
+      dispatch({ type: 'CREATE_FAIL' });
+      alert(getError(err));
+    }
+  };
 
   const [{ storeLoading, storeError, stores }, storeDispatch] = useReducer(
     storeReducer,
@@ -93,19 +122,11 @@ export default function PlaceOrderScreen() {
                 <ListGroup variant="flush">
                   <ListGroup.Item>
                     <strong>Store Name: </strong>
-                    {stores.map((store) =>
-                      store.slug === cart.pickUpLocation ? store.name : ''
-                    )}
+                    {cart.pickUpLocation.name}
                   </ListGroup.Item>
                   <ListGroup.Item>
                     <strong>Store Address: </strong>
-                    {stores.map((store) =>
-                      store.slug === cart.pickUpLocation ? store.address : ''
-                    )}
-                    ,{' '}
-                    {stores.map((store) =>
-                      store.slug === cart.pickUpLocation ? store.city : ''
-                    )}
+                    {cart.pickUpLocation.address}, {cart.pickUpLocation.city}
                   </ListGroup.Item>
                 </ListGroup>
               )}

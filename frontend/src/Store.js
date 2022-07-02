@@ -11,8 +11,8 @@ const initialState = {
       ? JSON.parse(localStorage.getItem('cartItems'))
       : [],
     pickUpLocation: localStorage.getItem('pickUpLocation')
-      ? localStorage.getItem('pickUpLocation')
-      : '',
+      ? JSON.parse(localStorage.getItem('pickUpLocation'))
+      : {},
     paymentMethod: localStorage.getItem('paymentMethod')
       ? localStorage.getItem('paymentMethod')
       : '',

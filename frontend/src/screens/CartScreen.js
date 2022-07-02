@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useReducer, useState } from 'react';
 import { Store } from '../Store';
 import { Helmet } from 'react-helmet-async';
 import { Row, Col, ListGroup, Button, Card, Form } from 'react-bootstrap';
@@ -6,7 +6,39 @@ import MessageBox from '../components/MessageBox';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+function reducer(state, action) {
+  switch (action.type) {
+    case 'FETCH_REQUEST':
+      return { ...state, loading: true };
+    case 'FETCH_SUCCESS':
+      return { ...state, stores: action.payload, loading: false };
+    case 'FETCH_FAIL':
+      return { ...state, loading: false, error: action.payload };
+    default:
+      return state;
+  }
+}
 export default function CartScreen() {
+  const [{ loading, error, stores }, dispatch] = useReducer(reducer, {
+    loading: true,
+    error: '',
+    stores: [],
+  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      dispatch({ type: 'FETCH_REQUEST' });
+      try {
+        const result = await axios.get('/api/stores');
+        dispatch({ type: 'FETCH_SUCCESS', payload: result.data });
+        console.log(result.data);
+      } catch (err) {
+        dispatch({ type: 'FETCH_FAIL', payload: err.message });
+      }
+    };
+
+    fetchData();
+  }, []);
   const navigate = useNavigate();
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const {
@@ -16,7 +48,7 @@ export default function CartScreen() {
     paymentMethod || 'Card'
   );
   const [pickUpLocationState, setPickUpLocation] = useState(
-    pickUpLocation || 'BNG-TB'
+    pickUpLocation || stores.find((x) => x.slug === 'BNG-TB')
   );
 
   const submitHandler = (e) => {
@@ -26,7 +58,7 @@ export default function CartScreen() {
       type: 'SAVE_PICKUP_LOCATION',
       payload: pickUpLocationState,
     });
-    localStorage.setItem('pickUpLocation', pickUpLocation);
+    localStorage.setItem('pickUpLocation', JSON.stringify(pickUpLocationState));
     ctxDispatch({
       type: 'SAVE_PAYMENT_METHOD',
       payload: paymentMethodName,
@@ -125,8 +157,15 @@ export default function CartScreen() {
                         id="BNG-TB"
                         label="Bike N Go Tower Bridge Store"
                         value="BNG-TB"
-                        checked={pickUpLocationState === 'BNG-TB'}
-                        onChange={(e) => setPickUpLocation(e.target.value)}
+                        checked={
+                          pickUpLocationState ===
+                          stores.find((x) => x.slug === 'BNG-TB')
+                        }
+                        onChange={(e) =>
+                          setPickUpLocation(
+                            stores.find((x) => x.slug === e.target.value)
+                          )
+                        }
                       />
                     </div>
                     <div className="mb-3">
@@ -135,8 +174,24 @@ export default function CartScreen() {
                         id="BNG-KC"
                         label="Bike N Go King's Cross Store"
                         value="BNG-KC"
-                        checked={pickUpLocationState === 'BNG-KC'}
-                        onChange={(e) => setPickUpLocation(e.target.value)}
+                        checked={
+                          pickUpLocationState ===
+                          stores.find((x) => x.slug === 'BNG-KC')
+                        }
+                        onChange={(e) => {
+                          setPickUpLocation(
+                            stores.find((x) => x.slug === e.target.value)
+                          );
+                          console.log(
+                            'THE STORE LOCATION',
+                            stores.find((x) => x.slug === e.target.value)
+                          );
+                          console.log('pickUpLocation', pickUpLocation);
+                          console.log(
+                            'pickUpLocationState',
+                            pickUpLocationState
+                          );
+                        }}
                       />
                     </div>
                   </ListGroup.Item>
