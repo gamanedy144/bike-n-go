@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useReducer, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Store } from '../Store';
 import { Helmet } from 'react-helmet-async';
 import { Row, Col, ListGroup, Button, Card, Form } from 'react-bootstrap';
@@ -19,18 +19,20 @@ export default function CartScreen() {
     pickUpLocation || 'BNG-TB'
   );
 
-  const submitHandlerStore = (e) => {
+  const submitHandler = (e) => {
     e.preventDefault();
+    console.log(pickUpLocation);
     ctxDispatch({
       type: 'SAVE_PICKUP_LOCATION',
       payload: pickUpLocationState,
     });
     localStorage.setItem('pickUpLocation', pickUpLocation);
-  };
-  const submitHandlerPayment = (e) => {
-    e.preventDefault();
-    ctxDispatch({ type: 'SAVE_PAYMENT_METHOD', payload: paymentMethodName });
+    ctxDispatch({
+      type: 'SAVE_PAYMENT_METHOD',
+      payload: paymentMethodName,
+    });
     localStorage.setItem('paymentMethod', paymentMethod);
+    navigate('/signin?redirect=/placeorder');
   };
   const updateCartHandler = async (item, quantity) => {
     const { data } = await axios.get(`/api/products/${item._id}`);
@@ -45,10 +47,6 @@ export default function CartScreen() {
   };
   const removeItemHandler = (item) => {
     ctxDispatch({ type: 'CART_REMOVE_ITEM', payload: item });
-  };
-
-  const checkoutHandler = () => {
-    navigate('/signin?redirect=/orderplacement');
   };
 
   return (
@@ -113,14 +111,14 @@ export default function CartScreen() {
           )}
         </Col>
         <Col md={4}>
-          <Card className="mb-3">
-            <Card.Body>
-              <ListGroup variant="flush">
-                <ListGroup.Item>
-                  <h5>Choose a store:</h5>
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <Form onSubmit={submitHandlerStore}>
+          <Form onSubmit={submitHandler}>
+            <Card className="mb-3">
+              <Card.Body>
+                <ListGroup variant="flush">
+                  <ListGroup.Item>
+                    <h5>Choose a store:</h5>
+                  </ListGroup.Item>
+                  <ListGroup.Item>
                     <div className="mb-3">
                       <Form.Check
                         type="radio"
@@ -141,19 +139,17 @@ export default function CartScreen() {
                         onChange={(e) => setPickUpLocation(e.target.value)}
                       />
                     </div>
-                  </Form>
-                </ListGroup.Item>
-              </ListGroup>
-            </Card.Body>
-          </Card>
-          <Card className="mb-3">
-            <Card.Body>
-              <ListGroup variant="flush">
-                <ListGroup.Item>
-                  <h5>Choose a store:</h5>
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <Form onSubmit={submitHandlerPayment}>
+                  </ListGroup.Item>
+                </ListGroup>
+              </Card.Body>
+            </Card>
+            <Card className="mb-3">
+              <Card.Body>
+                <ListGroup variant="flush">
+                  <ListGroup.Item>
+                    <h5>Choose a store:</h5>
+                  </ListGroup.Item>
+                  <ListGroup.Item>
                     <div className="mb-3">
                       <Form.Check
                         type="radio"
@@ -174,38 +170,37 @@ export default function CartScreen() {
                         onChange={(e) => setPaymentMethod(e.target.value)}
                       />
                     </div>
-                  </Form>
-                </ListGroup.Item>
-              </ListGroup>
-            </Card.Body>
-          </Card>
-          <Card>
-            <Card.Body>
-              <ListGroup variant="flush">
-                <ListGroup.Item>
-                  <h5>
-                    Subtotal ({cartItems.reduce((a, c) => a + c.quantity, 0)}{' '}
-                    items) : ${' '}
-                    {cartItems.reduce((a, c) => a + c.price * c.quantity, 0)}{' '}
-                    per day
-                  </h5>
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <div className="d-grid">
-                    <Button
-                      type="submit"
-                      variant="primary"
-                      disabled={cartItems.length === 0}
-                      className="dark-bgc"
-                      onClick={checkoutHandler}
-                    >
-                      Book now!
-                    </Button>
-                  </div>
-                </ListGroup.Item>
-              </ListGroup>
-            </Card.Body>
-          </Card>
+                  </ListGroup.Item>
+                </ListGroup>
+              </Card.Body>
+            </Card>
+            <Card>
+              <Card.Body>
+                <ListGroup variant="flush">
+                  <ListGroup.Item>
+                    <h5>
+                      Subtotal ({cartItems.reduce((a, c) => a + c.quantity, 0)}{' '}
+                      items) : ${' '}
+                      {cartItems.reduce((a, c) => a + c.price * c.quantity, 0)}{' '}
+                      per day
+                    </h5>
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <div className="d-grid">
+                      <Button
+                        type="submit"
+                        variant="primary"
+                        disabled={cartItems.length === 0}
+                        className="dark-bgc"
+                      >
+                        Continue
+                      </Button>
+                    </div>
+                  </ListGroup.Item>
+                </ListGroup>
+              </Card.Body>
+            </Card>
+          </Form>
         </Col>
       </Row>
     </div>

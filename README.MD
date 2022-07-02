@@ -40,3 +40,9 @@ Create and seed sample users
 Create signing api
 
 Complete signin screen
+
+Created and fixed functionality for CartScreen
+Updated NavBar to hold all the necessary links
+Create Stores screen
+Create PlaceOrder screen
+Justify the navbar items properly according to the design

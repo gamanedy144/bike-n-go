@@ -12,6 +12,7 @@ import SignInScreen from './screens/SigninScreen';
 import SignupScreen from './screens/SignupScreen';
 import OrdersScreen from './screens/OrdersScreen';
 import StoreScreen from './screens/StoreScreen';
+import PlaceOrderScreen from './screens/PlaceOrderScreen';
 function App() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { cart, userInfo } = state;
@@ -30,6 +31,7 @@ function App() {
               paddingBottom: '1rem',
             }}
             variant="light"
+            expand="lg"
           >
             <Container>
               <LinkContainer to="/">
@@ -37,52 +39,60 @@ function App() {
                   <h1>Bike 'N' Go</h1>
                 </Navbar.Brand>
               </LinkContainer>
-              <Nav className="me-auto ">
-                <Link to="/" className="nav-link">
-                  Home
-                </Link>
-                <Link to="/products" className="nav-link">
-                  Products
-                </Link>
-                <Link to="/stores" className="nav-link">
-                  Stores
-                </Link>
-                <Link to="/cart" className="nav-link">
-                  Cart
-                  {cart.cartItems.length > 0 && (
-                    <Badge pill className="bg-dark ms-3">
-                      {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
-                    </Badge>
-                  )}
-                </Link>
-                {userInfo ? (
-                  <NavDropdown title={userInfo.name} id="basic-nav-dropdown">
-                    <LinkContainer to="/profile">
-                      <NavDropdown.Item>User Profile</NavDropdown.Item>
-                    </LinkContainer>
-                    <LinkContainer to="/orderhistory">
-                      <NavDropdown.Item>Order History</NavDropdown.Item>
-                    </LinkContainer>
-                    <NavDropdown.Divider />
-                    <Link
-                      className="dropdown-item"
-                      to="#signout"
-                      onClick={signoutHandler}
-                    >
-                      Sign out
+              <Navbar.Toggle aria-controls="basic-navbar-nav" />
+              <Navbar.Collapse id="basic-navbar-nav">
+                <Nav className="me-auto w-100 justify-content-end">
+                  <Link to="/" className="nav-link">
+                    Home
+                  </Link>
+                  <Link to="/products" className="nav-link">
+                    Products
+                  </Link>
+                  <Link to="/stores" className="nav-link">
+                    Stores
+                  </Link>
+                  <div className="me-auto w-100 justify-content-end navbar-nav">
+                    <Link to="/cart" className="nav-link">
+                      Cart
+                      {cart.cartItems.length > 0 && (
+                        <Badge pill className="bg-dark ms-3">
+                          {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
+                        </Badge>
+                      )}
                     </Link>
-                  </NavDropdown>
-                ) : (
-                  <React.Fragment>
-                    <Link className="nav-link" to="/signup">
-                      <span className="dark-bgc nav-button">Register</span>
-                    </Link>
-                    <Link className="nav-link" to="/signin">
-                      <span className="light-bgc nav-button">Sign In</span>
-                    </Link>
-                  </React.Fragment>
-                )}
-              </Nav>
+                    {userInfo ? (
+                      <NavDropdown
+                        title={userInfo.name}
+                        id="basic-nav-dropdown"
+                      >
+                        <LinkContainer to="/profile">
+                          <NavDropdown.Item>User Profile</NavDropdown.Item>
+                        </LinkContainer>
+                        <LinkContainer to="/orderhistory">
+                          <NavDropdown.Item>Order History</NavDropdown.Item>
+                        </LinkContainer>
+                        <NavDropdown.Divider />
+                        <Link
+                          className="dropdown-item"
+                          to="#signout"
+                          onClick={signoutHandler}
+                        >
+                          Sign out
+                        </Link>
+                      </NavDropdown>
+                    ) : (
+                      <React.Fragment>
+                        <Link className="nav-link" to="/signup">
+                          <span className="dark-bgc nav-button">Register</span>
+                        </Link>
+                        <Link className="nav-link" to="/signin">
+                          <span className="light-bgc nav-button">Sign In</span>
+                        </Link>
+                      </React.Fragment>
+                    )}
+                  </div>
+                </Nav>
+              </Navbar.Collapse>
             </Container>
           </Navbar>
         </header>
@@ -95,6 +105,7 @@ function App() {
               <Route path="/signin" element={<SignInScreen />} />
               <Route path="/signup" element={<SignupScreen />} />
               <Route path="/stores" element={<StoreScreen />} />
+              <Route path="/placeorder" element={<PlaceOrderScreen />} />
             </Routes>
           </Container>
         </main>

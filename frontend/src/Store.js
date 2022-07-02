@@ -56,6 +56,7 @@ function reducer(state, action) {
           cartItems: [],
           pickUpLocation: '',
           paymentMethod: '',
+          user: '',
         },
       };
     case 'SAVE_PICKUP_LOCATION':
@@ -73,6 +74,11 @@ function reducer(state, action) {
           ...state.cart,
           paymentMethod: action.payload,
         },
+      };
+    case 'CART_CLEAR':
+      return {
+        ...state,
+        cart: { ...state.cart, cartItems: [] },
       };
     default:
       return state;
