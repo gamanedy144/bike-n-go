@@ -15,6 +15,7 @@ import StoreScreen from './screens/StoreScreen';
 import PlaceOrderScreen from './screens/PlaceOrderScreen';
 import OrderScreen from './screens/OrderScreen';
 import ProfileScreen from './screens/ProfileScreen';
+import SearchScreen from './screens/SearchScreen';
 function App() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { cart, userInfo } = state;
@@ -50,7 +51,7 @@ function App() {
                   <Link to="/" className="nav-link">
                     Home
                   </Link>
-                  <Link to="/products" className="nav-link">
+                  <Link to="/search" className="nav-link">
                     Products
                   </Link>
                   <Link to="/stores" className="nav-link">
@@ -114,6 +115,7 @@ function App() {
               <Route path="/order/:id" element={<OrderScreen />} />
               <Route path="/orderhistory" element={<OrderHistoryScreen />} />
               <Route path="/profile" element={<ProfileScreen />} />
+              <Route path="/search" element={<SearchScreen />} />
             </Routes>
           </Container>
         </main>
