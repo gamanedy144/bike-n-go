@@ -59,11 +59,41 @@ main {
 }
 .dark-bgc {
   background-color: #000;
-  border: 0px black solid;
+  border: 1px black solid;
+  color: #fff;
+}
+.dark-bgc:hover {
+  background-color: #fff;
+  border: 1px black solid;
+  color: #000;
 }
 .img-thumbnail {
   height: 70px;
 }
 .small-container {
   max-width: 600px;
+}
+.light-bgc {
+  background-color: #fff;
+  border: 1px black solid;
+  color: #000;
+}
+.light-bgc:hover {
+  background-color: #000;
+  border: 1px black solid;
+  color: #fff;
+}
+.nav-button {
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  font-size: 1rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.25rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.navbar-nav {
+  align-items: center;
 }

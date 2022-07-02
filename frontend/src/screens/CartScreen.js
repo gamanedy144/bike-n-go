@@ -19,16 +19,18 @@ export default function CartScreen() {
     pickUpLocation || 'BNG-TB'
   );
 
-  const submitHandler = (e) => {
+  const submitHandlerStore = (e) => {
     e.preventDefault();
-    ctxDispatch({ type: 'SAVE_PAYMENT_METHOD', payload: paymentMethodName });
-    localStorage.setItem('paymentMethod', paymentMethod);
-
     ctxDispatch({
       type: 'SAVE_PICKUP_LOCATION',
       payload: pickUpLocationState,
     });
     localStorage.setItem('pickUpLocation', pickUpLocation);
+  };
+  const submitHandlerPayment = (e) => {
+    e.preventDefault();
+    ctxDispatch({ type: 'SAVE_PAYMENT_METHOD', payload: paymentMethodName });
+    localStorage.setItem('paymentMethod', paymentMethod);
   };
   const updateCartHandler = async (item, quantity) => {
     const { data } = await axios.get(`/api/products/${item._id}`);
@@ -46,7 +48,7 @@ export default function CartScreen() {
   };
 
   const checkoutHandler = () => {
-    navigate('/signin?redirect=/orders');
+    navigate('/signin?redirect=/orderplacement');
   };
 
   return (
@@ -118,7 +120,7 @@ export default function CartScreen() {
                   <h5>Choose a store:</h5>
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  <Form onSubmit={submitHandler}>
+                  <Form onSubmit={submitHandlerStore}>
                     <div className="mb-3">
                       <Form.Check
                         type="radio"
@@ -151,7 +153,7 @@ export default function CartScreen() {
                   <h5>Choose a store:</h5>
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  <Form onSubmit={submitHandler}>
+                  <Form onSubmit={submitHandlerPayment}>
                     <div className="mb-3">
                       <Form.Check
                         type="radio"

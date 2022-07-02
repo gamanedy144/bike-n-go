@@ -5,11 +5,13 @@ import ProductScreen from './screens/ProductScreen';
 import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Badge, Nav, NavDropdown } from 'react-bootstrap';
+import { Badge, Button, Nav, NavDropdown } from 'react-bootstrap';
 import { Store } from './Store';
 import CartScreen from './screens/CartScreen';
 import SignInScreen from './screens/SigninScreen';
 import SignupScreen from './screens/SignupScreen';
+import OrdersScreen from './screens/OrdersScreen';
+import StoreScreen from './screens/StoreScreen';
 function App() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { cart, userInfo } = state;
@@ -35,7 +37,16 @@ function App() {
                   <h1>Bike 'N' Go</h1>
                 </Navbar.Brand>
               </LinkContainer>
-              <Nav className="me-auto">
+              <Nav className="me-auto ">
+                <Link to="/" className="nav-link">
+                  Home
+                </Link>
+                <Link to="/products" className="nav-link">
+                  Products
+                </Link>
+                <Link to="/stores" className="nav-link">
+                  Stores
+                </Link>
                 <Link to="/cart" className="nav-link">
                   Cart
                   {cart.cartItems.length > 0 && (
@@ -62,9 +73,14 @@ function App() {
                     </Link>
                   </NavDropdown>
                 ) : (
-                  <Link className="nav-link" to="/signin">
-                    Sign In
-                  </Link>
+                  <React.Fragment>
+                    <Link className="nav-link" to="/signup">
+                      <span className="dark-bgc nav-button">Register</span>
+                    </Link>
+                    <Link className="nav-link" to="/signin">
+                      <span className="light-bgc nav-button">Sign In</span>
+                    </Link>
+                  </React.Fragment>
                 )}
               </Nav>
             </Container>
@@ -78,6 +94,7 @@ function App() {
               <Route path="/cart" element={<CartScreen />} />
               <Route path="/signin" element={<SignInScreen />} />
               <Route path="/signup" element={<SignupScreen />} />
+              <Route path="/stores" element={<StoreScreen />} />
             </Routes>
           </Container>
         </main>
