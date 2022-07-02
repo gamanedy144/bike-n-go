@@ -14,6 +14,7 @@ import OrderHistoryScreen from './screens/OrderHistoryScreen';
 import StoreScreen from './screens/StoreScreen';
 import PlaceOrderScreen from './screens/PlaceOrderScreen';
 import OrderScreen from './screens/OrderScreen';
+import ProfileScreen from './screens/ProfileScreen';
 function App() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { cart, userInfo } = state;
@@ -21,6 +22,9 @@ function App() {
   const signoutHandler = () => {
     ctxDispatch({ type: 'USER_SIGNOUT' });
     localStorage.removeItem('userInfo');
+    localStorage.removeItem('paymentMethod');
+    localStorage.removeItem('pickUpLocation');
+    window.location.href = '/signin';
   };
   return (
     <BrowserRouter>
@@ -109,6 +113,7 @@ function App() {
               <Route path="/placeorder" element={<PlaceOrderScreen />} />
               <Route path="/order/:id" element={<OrderScreen />} />
               <Route path="/orderhistory" element={<OrderHistoryScreen />} />
+              <Route path="/profile" element={<ProfileScreen />} />
             </Routes>
           </Container>
         </main>
