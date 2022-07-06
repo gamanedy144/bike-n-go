@@ -56,3 +56,9 @@ Create user profile screen
 Create Products search screen
 
 Update Typo and add responsive width for navigation iframe
+
+How to run - clone repository locally
+Open terminal into backend folder and run `npm start`
+Open terminat into frontent folder and run `npm start`
+Open another browser tab and go to http://localhost:5000/api/seed to load the application
+Enjoy!
