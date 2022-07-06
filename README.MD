@@ -54,3 +54,5 @@ Create OrderHistory Screen
 Create user profile screen
 
 Create Products search screen
+
+Update Typo and add responsive width for navigation iframe

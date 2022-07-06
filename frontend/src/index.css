@@ -97,3 +97,8 @@ main {
 .navbar-nav {
   align-items: center;
 }
+iframe {
+  max-width: 640px;
+  width: 95vw;
+  max-height: 480px;
+}

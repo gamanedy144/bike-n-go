@@ -202,7 +202,7 @@ export default function CartScreen() {
               <Card.Body>
                 <ListGroup variant="flush">
                   <ListGroup.Item>
-                    <h5>Choose a store:</h5>
+                    <h5>Choose a payment method:</h5>
                   </ListGroup.Item>
                   <ListGroup.Item>
                     <div className="mb-3">
